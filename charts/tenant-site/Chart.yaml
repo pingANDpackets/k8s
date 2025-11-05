@@ -1,0 +1,6 @@
+apiVersion: v2
+name: tenant-site
+description: Helm chart for deploying a tenant website with TLS ingress and runtime policies
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

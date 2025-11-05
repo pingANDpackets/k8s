@@ -1,0 +1,20 @@
+image:
+  repository: localhost:5001/tenant-node-site
+  tag: latest
+
+env:
+  TENANT_NAME: "user3"
+
+ingress:
+  host: user3.127.0.0.1.sslip.io
+  tls:
+    secretName: user3-tenant-tls
+
+certificate:
+  dnsNames:
+    - user3.127.0.0.1.sslip.io
+
+replicaCount: 1
+
+serviceMonitor:
+  enabled: true

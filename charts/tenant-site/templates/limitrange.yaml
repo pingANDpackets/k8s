@@ -1,0 +1,20 @@
+{{- if .Values.limitRange.enabled }}
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: {{ include "tenant-site.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "tenant-site.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  limits:
+    - type: Container
+      default:
+        {{- range $k, $v := .Values.limitRange.defaultLimit }}
+        {{ $k }}: {{ $v | quote }}
+        {{- end }}
+      defaultRequest:
+        {{- range $k, $v := .Values.limitRange.defaultRequest }}
+        {{ $k }}: {{ $v | quote }}
+        {{- end }}
+{{- end }}

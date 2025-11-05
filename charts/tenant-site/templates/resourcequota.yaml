@@ -1,0 +1,14 @@
+{{- if .Values.resourceQuota.enabled }}
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: {{ include "tenant-site.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "tenant-site.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  hard:
+    {{- range $k, $v := .Values.resourceQuota.hard }}
+    {{ $k }}: {{ $v | quote }}
+    {{- end }}
+{{- end }}

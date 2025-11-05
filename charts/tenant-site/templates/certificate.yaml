@@ -1,0 +1,18 @@
+{{- if .Values.certificate.enabled }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ include "tenant-site.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "tenant-site.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  secretName: {{ .Values.ingress.tls.secretName }}
+  dnsNames:
+    {{- range .Values.certificate.dnsNames }}
+    - {{ . }}
+    {{- end }}
+  issuerRef:
+    name: {{ .Values.certificate.issuerRef.name }}
+    kind: {{ .Values.certificate.issuerRef.kind }}
+{{- end }}

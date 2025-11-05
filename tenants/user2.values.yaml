@@ -1,0 +1,20 @@
+image:
+  repository: localhost:5001/tenant-flask-site
+  tag: latest
+
+env:
+  TENANT_NAME: "user2"
+
+ingress:
+  host: user2.127.0.0.1.sslip.io
+  tls:
+    secretName: user2-tenant-tls
+
+certificate:
+  dnsNames:
+    - user2.127.0.0.1.sslip.io
+
+replicaCount: 2
+
+serviceMonitor:
+  enabled: true

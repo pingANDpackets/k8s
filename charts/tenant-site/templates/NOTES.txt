@@ -1,0 +1,8 @@
+Thank you for deploying {{ .Release.Name }}!
+
+Access URL:
+  https://{{ .Values.ingress.host }}
+
+Verify:
+  kubectl get all -n {{ .Release.Namespace }}
+  curl -k https://{{ .Values.ingress.host }}

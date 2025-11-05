@@ -1,0 +1,32 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "tenant-site.fullname" . }}
+  annotations:
+    {{- range $k, $v := .Values.ingress.annotations }}
+    {{ $k }}: {{ $v | quote }}
+    {{- end }}
+  labels:
+    app.kubernetes.io/name: {{ include "tenant-site.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  ingressClassName: {{ .Values.ingress.className }}
+  rules:
+    - host: {{ .Values.ingress.host }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "tenant-site.fullname" . }}
+                port:
+                  number: {{ .Values.service.port }}
+  {{- if and .Values.ingress.tls.enabled .Values.ingress.tls.secretName }}
+  tls:
+    - hosts:
+        - {{ .Values.ingress.host }}
+      secretName: {{ .Values.ingress.tls.secretName }}
+  {{- end }}
+{{- end }}
