@@ -64,7 +64,7 @@ helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx \
   --set controller.hostPort.enabled=true \
   --set controller.hostPort.ports.http=80 \
   --set controller.hostPort.ports.https=443 \
-  --set controller.nodeSelector."ingress-ready"=true
+  --set-string controller.nodeSelector."ingress-ready"=true
 
 echo "Installing cert-manager..."
 helm repo add jetstack https://charts.jetstack.io >/dev/null
